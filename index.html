@@ -3,387 +3,209 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anabel… will you be my Valentine? 💘</title>
+  <title>My love… will you be my Valentine? 💘</title>
+
   <style>
-    :root{
-      --bg1:#fff0f6;
-      --bg2:#ffe8f1;
-      --card:#ffffffcc;
-      --text:#2b2b2b;
-      --yes:#ff3b7a;
-      --yes2:#ff5a92;
-      --no:#2b2b2b;
-    }
-    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
       height:100vh;
-      overflow:hidden;
-      background: radial-gradient(1200px 700px at 20% 20%, var(--bg2), transparent 60%),
-                  radial-gradient(1000px 600px at 80% 30%, #ffd6e7, transparent 55%),
-                  linear-gradient(180deg, var(--bg1), #fff);
-      display:grid;
-      place-items:center;
-    }
-    .card{
-      width:min(720px, 92vw);
-      padding:28px 22px;
-      border-radius:22px;
-      background:var(--card);
-      backdrop-filter: blur(10px);
-      border:1px solid #ffffff;
-      box-shadow: 0 18px 55px rgba(0,0,0,.10);
-      position:relative;
-      text-align:center;
-    }
-    h1{ margin:0 0 8px; font-size: clamp(28px, 4vw, 46px); letter-spacing:-0.02em; }
-    .sub{ margin:0 0 18px; font-size: clamp(14px, 2.2vw, 18px); opacity:.85; }
-    .gif{
-      width:min(260px, 70vw);
-      height:auto;
-      margin: 10px auto 18px;
-      border-radius:18px;
-      box-shadow: 0 10px 24px rgba(0,0,0,.10);
-      border: 1px solid rgba(255,255,255,.8);
-      display:block;
-    }
-    .stage{
-      position:relative;
-      width:100%;
-      height:120px;
-      margin-top:10px;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:14px;
-      user-select:none;
+      background: linear-gradient(135deg,#ffe6f0,#fff);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow:hidden;
     }
-    button{
-      border:none;
-      padding:14px 18px;
-      border-radius:16px;
-      font-size:18px;
-      font-weight:800;
-      cursor:pointer;
-      transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
-      box-shadow: 0 10px 22px rgba(0,0,0,.10);
-      min-width: 150px;
-      touch-action: manipulation;
-    }
-    #yesBtn{ background: linear-gradient(180deg, var(--yes2), var(--yes)); color:white; }
-    #yesBtn:hover{ transform: translateY(-2px) scale(1.02); filter:saturate(1.1); }
-    #noBtn{
-      background: #fff;
-      color: var(--no);
-      border: 2px solid rgba(0,0,0,.12);
-      position:absolute;
-      left: calc(50% + 160px);
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-    #noBtn:hover{ transform: translate(-50%, -50%) scale(1.02); }
-    .hint{ margin-top:10px; font-size:14px; opacity:.78; min-height:20px; }
 
+    .card{
+      background:white;
+      padding:32px 24px;
+      border-radius:24px;
+      box-shadow:0 20px 50px rgba(0,0,0,.15);
+      text-align:center;
+      width:min(90vw,520px);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size:2rem;
+    }
+
+    .sub{
+      margin-bottom:20px;
+      opacity:.85;
+    }
+
+    .stage{
+      position:relative;
+      height:140px;
+      margin-top:20px;
+    }
+
+    button{
+      padding:14px 22px;
+      border-radius:18px;
+      border:none;
+      font-size:18px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 10px 20px rgba(0,0,0,.15);
+    }
+
+    #yesBtn{
+      background:#ff3b7a;
+      color:white;
+    }
+
+    #noBtn{
+      position:absolute;
+      left:60%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      background:#f1f1f1;
+    }
+
+    .hint{
+      margin-top:10px;
+      font-size:14px;
+      opacity:.7;
+      min-height:20px;
+    }
+
+    /* Success overlay */
     .overlay{
       position:fixed;
       inset:0;
+      background:rgba(255,230,240,.9);
       display:none;
-      place-items:center;
-      background: rgba(255, 240, 246, 0.82);
-      backdrop-filter: blur(10px);
+      align-items:center;
+      justify-content:center;
       z-index:10;
-      overflow:hidden;
     }
-    .overlay.show{ display:grid; }
+
+    .overlay.show{
+      display:flex;
+    }
+
     .success{
-      width:min(760px, 92vw);
-      padding:26px 22px;
-      border-radius:22px;
-      background:#ffffffd8;
-      border:1px solid rgba(255,255,255,.9);
-      box-shadow: 0 18px 55px rgba(0,0,0,.12);
+      background:white;
+      padding:30px;
+      border-radius:24px;
       text-align:center;
-      position:relative;
-    }
-    .success h2{ margin:0 0 8px; font-size: clamp(24px, 3.5vw, 40px); }
-    .success p{ margin:0 0 14px; opacity:.86; }
-    .row{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:10px; }
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:999px;
-      border:1px solid rgba(0,0,0,.08); background:#fff;
-      font-weight:650; font-size:14px;
-    }
-    .linkBtn{
-      background: #111; color:#fff; border-radius:14px;
-      padding:12px 14px; font-size:16px; font-weight:850;
-      box-shadow: 0 12px 24px rgba(0,0,0,.14);
-      text-decoration:none; display:inline-block;
-    }
-    .linkBtn.alt{
-      background: #fff; color:#111;
-      border: 2px solid rgba(0,0,0,.12);
+      box-shadow:0 20px 50px rgba(0,0,0,.2);
     }
 
     .heart{
       position:absolute;
-      width:18px; height:18px;
-      transform: rotate(45deg);
-      background: #ff3b7a;
-      opacity:0.9;
-      animation: floatUp linear forwards;
-      border-radius:4px;
-      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+      width:16px;
+      height:16px;
+      background:#ff3b7a;
+      transform:rotate(45deg);
+      animation:float 4s linear forwards;
     }
-    .heart:before,.heart:after{
+
+    .heart::before,
+    .heart::after{
       content:"";
       position:absolute;
-      width:18px; height:18px;
+      width:16px;
+      height:16px;
       background:#ff3b7a;
       border-radius:50%;
     }
-    .heart:before{ left:-9px; top:0; }
-    .heart:after{ top:-9px; left:0; }
 
-    @keyframes floatUp{
-      from{ transform: translateY(0) rotate(45deg) scale(1); opacity:0.95; }
-      to{ transform: translateY(-120vh) rotate(45deg) scale(1.15); opacity:0; }
-    }
+    .heart::before{left:-8px}
+    .heart::after{top:-8px}
 
-    @media (max-width:520px){
-      #noBtn{ left: calc(50% + 120px); }
-      button{ min-width: 140px; }
+    @keyframes float{
+      from{bottom:-20px;opacity:1}
+      to{bottom:120vh;opacity:0}
     }
   </style>
 </head>
 
 <body>
-  <div class="card" id="card">
-    <h1>Anabel… will you be my Valentine? 💘</h1>
-    <p class="sub">Feb 14, 9–11 PM in Winnipeg. Hopefully you don’t pick up a shift then 😭</p>
 
-    <!-- swap this GIF if you want -->
-    <img class="gif" alt="cute" src="https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif" />
+<div class="card">
+  <h1>My love… will you be my Valentine? 💘</h1>
+  <p class="sub">
+    Feb 14, 9–11 PM in Winnipeg.<br>
+    Hopefully you don’t pick up a shift then 😭
+  </p>
 
-    <div class="stage" id="stage">
-      <button id="yesBtn">Yes 😍</button>
-      <button id="noBtn" aria-label="No">I’m working 😭</button>
-    </div>
-    <div class="hint" id="hint"></div>
+  <div class="stage" id="stage">
+    <button id="yesBtn">Yes 😍</button>
+    <button id="noBtn">I’m working 😭</button>
   </div>
 
-  <div class="overlay" id="overlay">
-    <div class="success">
-      <h2>YAY Anabel 😍 It’s a date 💞</h2>
-      <p>Locked in: Feb 14, 9:00–11:00 PM. No picking up shifts 😌</p>
+  <div class="hint" id="hint"></div>
+</div>
 
-      <div class="row" id="detailsRow"></div>
-
-      <div class="row" style="margin-top:14px">
-        <a class="linkBtn" id="downloadIcs" href="#" download="valentines-date.ics">Add to Calendar (ICS)</a>
-        <a class="linkBtn alt" id="googleCal" href="#" target="_blank" rel="noopener">Google Calendar</a>
-      </div>
-
-      <p style="margin-top:14px; font-size:14px; opacity:.75;">
-        See you there 💘
-      </p>
-    </div>
+<div class="overlay" id="overlay">
+  <div class="success">
+    <h2>YAY 😍 It’s a date 💞</h2>
+    <p>Feb 14 · 9–11 PM<br>3338 Portage Ave</p>
   </div>
+</div>
 
 <script>
-  // Winnipeg (Central Time). Times below are local (9–11 PM).
-  const EVENT = {
-    title: "Valentine’s Date with Anabel 💘",
-    start: new Date("2026-02-14T21:00:00"),
-    end:   new Date("2026-02-14T23:00:00"),
-    location: "3338 Portage Avenue, Winnipeg, MB R3K 0Z1",
-    description: "Anabel said yes 💘 Hopefully you don’t pick up a shift then 😭"
-  };
-
-  // "No" behavior escalation (fun, not mean)
-  const noPhrases = [
-    "Wait… you’re really choosing a shift over me? 😭",
-    "Are you sure, Anabel? 🥺",
-    "Think about it again… 😌",
-    "Okay but… what if I bring snacks? 👀",
-    "Final answer?? 😳"
-  ];
-  let noClicks = 0;
-
-  const stage = document.getElementById("stage");
   const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
+  const stage = document.getElementById("stage");
   const hint = document.getElementById("hint");
+  const yesBtn = document.getElementById("yesBtn");
   const overlay = document.getElementById("overlay");
 
-  function moveNoButton(awayFromX=null, awayFromY=null){
-    const rect = stage.getBoundingClientRect();
+  const phrases = [
+    "Are you sure? 🥺",
+    "Think again 😭",
+    "Wrong answer 😌",
+    "I’ll wait… 😏",
+    "Final answer?? 😳"
+  ];
+  let clicks = 0;
+
+  function moveNo(){
+    const stageRect = stage.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
-    const pad = 12;
-    const w = btnRect.width;
-    const h = btnRect.height;
 
-    let x = pad + Math.random() * (rect.width - w - pad*2);
-    let y = pad + Math.random() * (rect.height - h - pad*2);
+    const x = Math.random() * (stageRect.width - btnRect.width);
+    const y = Math.random() * (stageRect.height - btnRect.height);
 
-    if (awayFromX !== null && awayFromY !== null){
-      const px = awayFromX - rect.left;
-      const py = awayFromY - rect.top;
-      for(let i=0;i<8;i++){
-        const tx = pad + Math.random() * (rect.width - w - pad*2);
-        const ty = pad + Math.random() * (rect.height - h - pad*2);
-        const d  = (tx - px)**2 + (ty - py)**2;
-        const d2 = (x - px)**2 + (y - py)**2;
-        if (d > d2){ x = tx; y = ty; }
-      }
-    }
-
-    noBtn.style.left = (rect.left + x + w/2) + "px";
-    noBtn.style.top  = (rect.top  + y + h/2) + "px";
-    noBtn.style.transform = "translate(-50%, -50%)";
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
   }
 
-  function initNoPos(){
-    const rect = stage.getBoundingClientRect();
-    noBtn.style.left = (rect.left + rect.width*0.72) + "px";
-    noBtn.style.top  = (rect.top  + rect.height*0.5) + "px";
-  }
-  initNoPos();
-  window.addEventListener("resize", initNoPos);
-
-  // Desktop: dodge when cursor gets close
-  window.addEventListener("mousemove", (e)=>{
-    const btn = noBtn.getBoundingClientRect();
-    const cx = btn.left + btn.width/2;
-    const cy = btn.top + btn.height/2;
-    const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
-    if (dist < 120){
-      moveNoButton(e.clientX, e.clientY);
-      hint.textContent = "Nice try 😌";
+  // Cursor dodge
+  stage.addEventListener("mousemove", (e)=>{
+    const r = noBtn.getBoundingClientRect();
+    const dist = Math.hypot(
+      e.clientX - (r.left + r.width/2),
+      e.clientY - (r.top + r.height/2)
+    );
+    if(dist < 100){
+      moveNo();
     }
   });
 
-  // Mobile: dodge taps near it
-  window.addEventListener("touchstart", (e)=>{
-    const t = e.touches[0];
-    const btn = noBtn.getBoundingClientRect();
-    const cx = btn.left + btn.width/2;
-    const cy = btn.top + btn.height/2;
-    const dist = Math.hypot(t.clientX - cx, t.clientY - cy);
-    if (dist < 140){
-      moveNoButton(t.clientX, t.clientY);
-      hint.textContent = "Nope 😇";
-    }
-  }, {passive:true});
-
-  // If they manage to click the No button, escalate text + move it
+  // Click escalation
   noBtn.addEventListener("click", ()=>{
-    noClicks++;
-    hint.textContent = noPhrases[Math.min(noClicks-1, noPhrases.length-1)];
-    moveNoButton();
+    hint.textContent = phrases[Math.min(clicks, phrases.length-1)];
+    clicks++;
+    moveNo();
   });
 
-  // Calendar helpers
-  function toICSDate(dt){
-    const z = new Date(dt.getTime() - dt.getTimezoneOffset()*60000);
-    return z.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}Z$/, "Z");
-  }
-
-  function buildICS(){
-    const uid = crypto?.randomUUID ? crypto.randomUUID() : (Date.now()+"@valentine");
-    const dtStart = toICSDate(EVENT.start);
-    const dtEnd   = toICSDate(EVENT.end);
-    const now     = toICSDate(new Date());
-    const esc = (s)=> String(s).replace(/\\/g,"\\\\").replace(/\n/g,"\\n").replace(/,/g,"\\,").replace(/;/g,"\\;");
-
-    return [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "PRODID:-//Valentine Invite//EN",
-      "CALSCALE:GREGORIAN",
-      "METHOD:PUBLISH",
-      "BEGIN:VEVENT",
-      `UID:${uid}`,
-      `DTSTAMP:${now}`,
-      `DTSTART:${dtStart}`,
-      `DTEND:${dtEnd}`,
-      `SUMMARY:${esc(EVENT.title)}`,
-      `LOCATION:${esc(EVENT.location)}`,
-      `DESCRIPTION:${esc(EVENT.description)}`,
-      "END:VEVENT",
-      "END:VCALENDAR"
-    ].join("\r\n");
-  }
-
-  function buildGoogleCalLink(){
-    const fmt = (dt)=>{
-      const z = new Date(dt.getTime() - dt.getTimezoneOffset()*60000);
-      return z.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}Z$/, "Z");
-    };
-    const dates = `${fmt(EVENT.start)}/${fmt(EVENT.end)}`;
-    const params = new URLSearchParams({
-      action: "TEMPLATE",
-      text: EVENT.title,
-      dates,
-      details: EVENT.description,
-      location: EVENT.location
-    });
-    return "https://calendar.google.com/calendar/render?" + params.toString();
-  }
-
-  function showDetails(){
-    const row = document.getElementById("detailsRow");
-    const niceStart = EVENT.start.toLocaleString([], {
-      weekday:"long", year:"numeric", month:"long", day:"numeric",
-      hour:"2-digit", minute:"2-digit"
-    });
-    const niceEnd = EVENT.end.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
-    row.innerHTML = `
-      <span class="chip">📅 ${niceStart} – ${niceEnd}</span>
-      <span class="chip">📍 ${EVENT.location}</span>
-    `;
-  }
-
-  function heartsBurst(){
-    const count = 38;
-    for(let i=0;i<count;i++){
-      const h = document.createElement("div");
-      h.className = "heart";
-      const left = Math.random() * window.innerWidth;
-      const delay = Math.random() * 0.6;
-      const dur = 2.8 + Math.random() * 2.2;
-      const size = 10 + Math.random() * 18;
-
-      h.style.left = left + "px";
-      h.style.bottom = (-20 - Math.random()*80) + "px";
-      h.style.animationDuration = dur + "s";
-      h.style.animationDelay = delay + "s";
-      h.style.width = size + "px";
-      h.style.height = size + "px";
-
-      document.body.appendChild(h);
-      setTimeout(()=> h.remove(), (dur + delay) * 1000 + 200);
-    }
-  }
-
+  // Yes flow
   yesBtn.addEventListener("click", ()=>{
-    // Build downloadable ICS
-    const ics = buildICS();
-    const blob = new Blob([ics], {type: "text/calendar;charset=utf-8"});
-    const url = URL.createObjectURL(blob);
-    document.getElementById("downloadIcs").href = url;
-
-    // Google Calendar link
-    document.getElementById("googleCal").href = buildGoogleCalLink();
-
-    // Show overlay + hearts
-    showDetails();
     overlay.classList.add("show");
-    heartsBurst();
-    setInterval(heartsBurst, 2200);
+    setInterval(()=>{
+      const h=document.createElement("div");
+      h.className="heart";
+      h.style.left=Math.random()*window.innerWidth+"px";
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(),4000);
+    },200);
   });
 </script>
+
 </body>
 </html>
